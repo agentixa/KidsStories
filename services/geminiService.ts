@@ -1,6 +1,5 @@
-
 import { GoogleGenAI, Type, Modality } from "@google/genai";
-import { AgeGroup, Genre, Story, Scene } from '../types';
+import { AgeGroup, Genre, Story, Scene } from '../types.ts';
 
 const apiKey = process.env.API_KEY;
 const ai = new GoogleGenAI({ apiKey: apiKey });

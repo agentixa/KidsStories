@@ -1,7 +1,6 @@
-
 import React, { useState, useRef, useEffect } from 'react';
-import { AgeGroup, Genre, Story, Scene, HeroArchetype, AmbientSound } from './types';
-import { generateStoryText, generateSceneImage, generateSceneAudio } from './services/geminiService';
+import { AgeGroup, Genre, Story, Scene, HeroArchetype, AmbientSound } from './types.ts';
+import { generateStoryText, generateSceneImage, generateSceneAudio } from './services/geminiService.ts';
 import { 
   BookOpenIcon, 
   SparklesIcon, 
@@ -13,7 +12,8 @@ import {
   SunIcon, 
   MoonIcon, 
   ArrowPathIcon, 
-  UserIcon
+  UserIcon,
+  ExclamationCircleIcon
 } from '@heroicons/react/24/solid';
 
 // --- Constants ---
@@ -83,15 +83,22 @@ const LoadingScreen = ({ message }: { message: string }) => (
 );
 
 const ImageLoader = () => (
-  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-50/80 backdrop-blur-sm z-10 transition-all duration-300">
-    <div className="relative w-16 h-16 mb-3">
+  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-50/90 backdrop-blur-md z-20 transition-all duration-300 rounded-3xl">
+    <div className="relative w-20 h-20 mb-4">
       <div className="absolute inset-0 border-4 border-purple-100 rounded-full"></div>
       <div className="absolute inset-0 border-4 border-t-magic-primary border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
-      <SparklesIcon className="absolute inset-0 w-8 h-8 m-auto text-magic-accent animate-pulse" />
+      <SparklesIcon className="absolute inset-0 w-10 h-10 m-auto text-magic-accent animate-pulse" />
     </div>
-    <span className="text-sm font-bold text-magic-primary/80 animate-pulse">
+    <span className="text-base font-bold text-magic-primary animate-pulse tracking-wide">
       Création de l'image...
     </span>
+  </div>
+);
+
+const ImageError = () => (
+  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 z-10 text-gray-400 p-4 text-center">
+    <ExclamationCircleIcon className="w-16 h-16 mb-2 text-gray-300" />
+    <p className="text-sm font-medium">Image indisponible</p>
   </div>
 );
 
@@ -116,6 +123,7 @@ const App: React.FC = () => {
   
   // State: View
   const [isImageVisualReady, setIsImageVisualReady] = useState(false); // Browser finished loading image
+  const [imageError, setImageError] = useState(false);
 
   // State: Preferences
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -154,6 +162,7 @@ const App: React.FC = () => {
   // Effect: Reset visual loading state when scene changes or image URL updates
   useEffect(() => {
     setIsImageVisualReady(false);
+    setImageError(false);
   }, [currentSceneIndex, story?.scenes[currentSceneIndex]?.imageUrl]);
 
   // Effect: Audio Player Logic
@@ -453,16 +462,20 @@ const App: React.FC = () => {
         <div className="flex-1 bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row relative border-4 border-white dark:border-gray-700">
           
           {/* Image Section (Left/Top) */}
-          <div className="md:w-1/2 bg-gray-100 relative flex items-center justify-center overflow-hidden">
-            {/* Show loader if image isn't ready (either generating or downloading) */}
-            {(!scene.imageUrl || !isImageVisualReady) && <ImageLoader />}
+          <div className="md:w-1/2 bg-gray-100 relative flex items-center justify-center overflow-hidden min-h-[300px]">
+            {/* Show loader if image isn't ready and no error occurred */}
+            {(!scene.imageUrl || !isImageVisualReady) && !imageError && <ImageLoader />}
             
+            {/* Show error if image failed to load */}
+            {imageError && <ImageError />}
+
             {scene.imageUrl && (
                <img 
                  src={scene.imageUrl} 
                  alt="Scene illustration" 
                  className={`w-full h-full object-cover transition-opacity duration-500 ${isImageVisualReady ? 'opacity-100' : 'opacity-0'}`}
                  onLoad={() => setIsImageVisualReady(true)}
+                 onError={() => setImageError(true)}
                />
             )}
           </div>
