@@ -83,7 +83,7 @@ const LoadingScreen = ({ message }: { message: string }) => (
 );
 
 const ImageLoader = () => (
-  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-50/90 backdrop-blur-md z-20 transition-all duration-300 rounded-3xl">
+  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-50/90 backdrop-blur-md z-20 transition-all duration-300 rounded-3xl border border-white/50">
     <div className="relative w-20 h-20 mb-4">
       <div className="absolute inset-0 border-4 border-purple-100 rounded-full"></div>
       <div className="absolute inset-0 border-4 border-t-magic-primary border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
@@ -96,7 +96,7 @@ const ImageLoader = () => (
 );
 
 const ImageError = () => (
-  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 z-10 text-gray-400 p-4 text-center">
+  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 z-10 text-gray-400 p-4 text-center rounded-3xl">
     <ExclamationCircleIcon className="w-16 h-16 mb-2 text-gray-300" />
     <p className="text-sm font-medium">Image indisponible</p>
   </div>
