@@ -5,29 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Raconte-moi une histoire</title>
     <!-- Tailwind via CDN is fine for simplicity -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              'magic-primary': '#8B5CF6', // Violet
-              'magic-secondary': '#F472B6', // Pink
-              'magic-accent': '#FBBF24', // Amber
-              'dark-bg': '#1e1b4b',
-            },
-            fontFamily: {
-              sans: ['Comic Sans MS', 'Chalkboard SE', 'sans-serif'],
-            },
-            animation: {
-              'bounce-slow': 'bounce 3s infinite',
-              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            }
-          },
-        },
-      }
-    </script>
     <style>
       /* Custom scrollbar for story text */
       .scrollbar-hide::-webkit-scrollbar {
@@ -38,20 +15,7 @@
           scrollbar-width: none;
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "@heroicons/react/": "https://aistudiocdn.com/@heroicons/react@^2.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "vite": "https://aistudiocdn.com/vite@^7.2.4",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
-  }
-}
-</script>
-</head>
+  </head>
   <body class="bg-blue-50 text-slate-800 transition-colors duration-300">
     <div id="root"></div>
     <!-- Vite entry point -->
